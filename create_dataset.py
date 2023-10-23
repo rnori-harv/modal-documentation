@@ -11,8 +11,11 @@ import os
 import pandas as pd
 import modal
 import time
+from dotenv import load_dotenv
 
-os.environ['OPENAI_API_KEY'] = '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'
+load_dotenv()
+
+os.environ['OPENAI_API_KEY'] = os.getenv('OPENAI_API_KEY')
 openai.api_key = os.environ['OPENAI_API_KEY']
 stub = modal.Stub(image=modal.Image.debian_slim().pip_install("openai").pip_install("langchain").pip_install("pandas").pip_install("bs4"))
 volume = modal.NetworkFileSystem.persisted("job-storage-vol")
