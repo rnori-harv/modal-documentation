@@ -18,10 +18,10 @@ The logic for data scraping and dataset creation can be found in `create_dataset
 
 The goal of fine-tuning was to train Llama-2 (13B) to identify the topic of the question being asked that can be queried in the documentation
 
-For this step, I used Modal's fine-tuning [implementation](https://github.com/modal-labs/llama-finetuning) and adapted it to serve our model. I first copied the dataset into the `llama-finetuning/datasets` directory then made a script `llama-finetuning/datasets/docs_dataset.py`, which tokenizes each row of the dataset. 
+For this step, I used Modal's fine-tuning [implementation](https://github.com/modal-labs/llama-finetuning) and adapted it to serve our model. I first copied the dataset into the `llama-finetuning/datasets` directory then made a script `llama-finetuning/datasets/docs_dataset.py`, which tokenizes each row of the dataset. You can validate this dataset with `validate_dataset.py`. Then, I ran modal's `train.py` script, which stores a fine-tuned version of the model in a `modal volume`. This model can be used in the inference step
 
 #### RAG
-I used Langchain + OpenAI for RAG. Most of this logic is implemented in `llama-finetuning/inference.py` under `retrieve_docs()` and `load_retrieval()`. I first created a Pinecone vectorstore with the Documents created from scraping the documentation (each document featuring header + sub-header and page content). Then, I propogate the user's question through the fine-tuned Llama model, extract the identified topic, and feed that to the vectorstore. After it returns the content, I run it through OpenAI's GPT-4 to answer the user's question.
+I used Langchain + OpenAI for RAG. Most of this logic is implemented in `llama-finetuning/inference.py` under `retrieve_docs()` and `load_retrieval()`. I first created a Pinecone vectorstore with the Documents created from scraping the documentation (each document featuring header + sub-header and page content). Then, I propogate the user's question through the fine-tuned Llama model (the model is accessed through querying the run-id in the modal volume), extract the identified topic, and feed that to the vectorstore. After it returns the content, I run it through OpenAI's GPT-4 to answer the user's question.
 
 #### Deployment
 The deployment logic is also in `inference.py` in `app()`. The logic was taken from this [tutorial](https://modal.com/docs/guide/ex/text_generation_inference#serve-the-model). The website is deployed [here](https://rnori-harv--tgi-app.modal.run/).
