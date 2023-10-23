@@ -1,7 +1,7 @@
 # Modal Documentation Answering with Fine-tuning + RAG (w/ Pinecone, Langchain, Llama-2)
 ## Made by Rakesh Nori, powered by Modal Labs
 
-Here is the (website)[https://rnori-harv--tgi-app.modal.run/] for Modal documentation answering
+Here is the [website](https://rnori-harv--tgi-app.modal.run/) for Modal documentation answering
 
 This README details my process of creating this documentation service, powered by Llama-2, openai, and langchain.
 
@@ -24,4 +24,4 @@ For this step, I used Modal's fine-tuning [implementation](https://github.com/mo
 I used Langchain + OpenAI for RAG. Most of this logic is implemented in `llama-finetuning/inference.py` under `retrieve_docs()` and `load_retrieval()`. I first created a Pinecone vectorstore with the Documents created from scraping the documentation (each document featuring header + sub-header and page content). Then, I propogate the user's question through the fine-tuned Llama model, extract the identified topic, and feed that to the vectorstore. After it returns the content, I run it through OpenAI's GPT-4 to answer the user's question.
 
 #### Deployment
-The deployment logic is also in `inference.py` in `app()`. The logic was taken from this (tutorial)[https://modal.com/docs/guide/ex/text_generation_inference#serve-the-model]. The website is deployed (here)[https://rnori-harv--tgi-app.modal.run/].
+The deployment logic is also in `inference.py` in `app()`. The logic was taken from this [tutorial](https://modal.com/docs/guide/ex/text_generation_inference#serve-the-model). The website is deployed [here](https://rnori-harv--tgi-app.modal.run/).
