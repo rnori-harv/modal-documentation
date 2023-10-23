@@ -11,6 +11,8 @@ In this repo, there are four key steps: data scraping + dataset creation, finetu
 
 #### Data scraping and Dataset creation
 
+The logic for data scraping and dataset creation can be found in `create_dataset.py` and `modal_takehome_datascraping.ipynb`. The jupyter notebook involves exploratory analysis into the webapge url. I used the BeautifulSoup library to scrape all relevant documentation urls. For each webpage, I formed a document for each sub-header and the page content associated with it. Then, for each document, I queried GPT-4 to form 5 potential questions that a user could ask. For each of these questions, I paired it with the topic of the page header + sub-header (e.g. "How do I list the contents of a modal volume?" --> "modal volume modal volume ls"). I looped through all documents and repeated this process to form my dataset.
+
 
 #### Finetuning
 
